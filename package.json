@@ -1,0 +1,24 @@
+{
+  "name": "constructor-hangman",
+  "version": "1.0.0",
+  "description": "hangman game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21ghosts/Constructor-Hangman.git"
+  },
+  "author": "Nathan Young",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/21ghosts/Constructor-Hangman/issues"
+  },
+  "homepage": "https://github.com/21ghosts/Constructor-Hangman#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0",
+    "is-letter": "^1.1.1",
+    "prompt": "^1.0.0"
+  }
+}
