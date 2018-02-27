@@ -1,20 +1,25 @@
-var Letter = function (ltr) {
+var Letter = function(ltr)
+{
     this.letter = ltr;
     this.appear = false;
 
-    this.letterRender = function () {
+    this.letterDisplay = () => 
+    {
         // if this is a blank space
-        if (this.letter == ' ') {
+        if (this.letter === ' ') 
+        {
             //mark the space true
-            this.appear = true;
+            this.appear === true;
             // and return a space to the word
             return '  ';
             // if the letter hasn't been guessed
-        } if (this.appear === false) {
+        } if (this.appear === false) 
+        {
             // return letters placeholder
             return ' _ ';
             // if the letter has appeared (guessed)
-        } else {
+        } else 
+        {
             //show the letter
             return this.letter;
         }

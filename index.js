@@ -6,60 +6,58 @@ var Word = require('./word.js');
 var List = require('./list.js');
 
 var wordBank = List.newWord.wordList
-var guessesRemaining = 10
+var guessesLeft = 10
 //Empty Array. This will hold letters that have been guessed already.
-var guessedLetters = []
+var guessedLets = []
 var display = 0
 var currentWord
 
 startGame();
 
 function startGame() {
-    console.log('---------------------------------------------------------')
-    console.log('')
-    console.log('Welcome to Color Hangman!')
-    console.log('')
-    console.log('---------------------------------------------------------')
+   
+    console.log('Color Hangman!')
+    
 
 
-    if (guessedLetters.length > 0) {
-        guessedLetters = []
+    if (guessedLets.length > 0) {
+        guessedLets = []
     }
     inquirer.prompt([{
         name: "play",
         type: "confirm",
-        message: "Ready to play?"
+        message: "Wanna Play?"
     }]).then(function (answer) {
         if (answer.play) {
             newGame()
         } else {
-            console.log("Okay! See ya!");
+            console.log("Oh...ok then");
         }
     })
 }
 
 function newGame() {
-    if (guessesRemaining === 10) {
-        console.log("Get ready!")
+    if (guessesLeft === 10) {
+        
         console.log("GO!")
 
         var randNum = Math.floor(Math.random() * wordBank.length);
         currentWord = new Word(wordBank[randNum]);
         currentWord.getLetters(); //initiat get letters function
-        console.log(currentWord.wordRender());
+        console.log(currentWord.wordDisplay());
         userPrompts();
     } else {
-        resetGuessesRemaining();
+        resetguessesLeft();
         newGame();
     }
 }
 
-function resetGuessesRemaining() {
-    guessesRemaining = 10;
+function resetguessesLeft() {
+    guessesLeft = 10;
 }
 function userPrompts() {
     inquirer.prompt([{
-        name: "chosenLtr",
+        name: "chosenLetter",
         type: "input",
         message: "Choose a letter:",
         validate: function (value) {
@@ -70,52 +68,52 @@ function userPrompts() {
             }
         }
     }]).then(function (ltr) {
-        var letterReturned = (ltr.chosenLtr);
+        var letterRet = (ltr.chosenLetter);
         var guessedAlready = false;
-        for (var i = 0; i < guessedLetters.length; i++) {
-            if (letterReturned === guessedLetters[i]) {
+        for (var i = 0; i < guessedLets.length; i++) {
+            if (letterRet === guessedLets[i]) {
                 guessedAlready = true;
             }
         }
 
         if (guessedAlready === false) {
-            guessedLetters.push(letterReturned);
+            guessedLets.push(letterRet);
 
-            var found = currentWord.letterCheck(letterReturned);
+            var found = currentWord.letterCheck(letterRet);
 
             if (found === 0) {
                 console.log("Wrong!");
-                guessesRemaining--;
+                guessesLeft--;
                 display++;
-                console.log("Guesses remain: " + guessesRemaining);
+                console.log("Guesses left: " + guessesLeft);
                 
 
-                console.log("\n***************");
-                console.log(currentWord.wordRender());
-                console.log("\n***************");
+                console.log("\n**");
+                console.log(currentWord.wordDisplay());
+                console.log("\n**");
 
-                console.log("Letters guessed: " + guessedLetters);
+                console.log("Letters guessed: " + guessedLets);
             } else {
-                console.log("Woohoo! You guessed correctly!");
+                console.log("You guessed correctly!");
 
                     if (currentWord.wordCheck() === true) {
-                        console.log(currentWord.wordRender());
-                        console.log("Congrats! You won!");
+                        console.log(currentWord.wordDisplay());
+                        console.log("You won!");
                     } else {
-                        console.log("Guesses remianing: " + guessesRemaining);
-                        console.log(currentWord.wordRender());
-                        console.log("\n***************");
-                        console.log("Letters guessed: " + guessedLetters);
+                        console.log("Guesses remianing: " + guessesLeft);
+                        console.log(currentWord.wordDisplay());
+                        console.log("\n**");
+                        console.log("Letters guessed: " + guessedLets);
                     }
                 }
-                if (guessesRemaining > 0 && currentWord.wordFound === false) {
+                if (guessesLeft > 0 && currentWord.wordFound === false) {
                     userPrompts();
-                } else if (guessesRemaining === 0) {
+                } else if (guessesLeft === 0) {
                     console.log("Game over!");
-                    console.log("The word you were guessing was: " + currentWord.word);
+                    console.log("The word is: " + currentWord.word);
                 }
             } else {
-                console.log("You've guessed that letter already. Try again.");
+                console.log("Try again.");
                 userPrompts();
             }
         })

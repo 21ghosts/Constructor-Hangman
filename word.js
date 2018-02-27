@@ -6,7 +6,7 @@ function Word(wrd) {
     this.letters = []
     this.wordFound = false
 
-    this.getLetters = function () {
+    this.getLetters = () => {
         //populate the collection above with new Letter objects
         for (var i = 0; i < this.word.length; i++) {
             var newLetter = new Letter(this.word[i]);
@@ -15,7 +15,7 @@ function Word(wrd) {
     }
 
     this.wordCheck = function () {
-        if (this.letters.every(function (lttr) {
+        if (this.letters.every((lttr) => {
             return lttr.appear === true;
         })) {
             this.wordFound = true;
@@ -23,10 +23,10 @@ function Word(wrd) {
         }
     }
 
-    this.letterCheck = function (guessedLetter) {
+    this.letterCheck = (guessedLet) => {
         var whatToReturn = 0
-        this.letters.forEach(function (lttr) {
-            if (lttr.letter === guessedLetter) {
+        this.letters.forEach((lttr) => {
+            if (lttr.letter === guessedLet) {
                 lttr.appear = true
                 whatToReturn++
             }
@@ -34,10 +34,10 @@ function Word(wrd) {
         return whatToReturn
     }
 
-    this.wordRender = function () {
+    this.wordDisplay = () => {
         var display = ''
         this.letters.forEach(function (lttr) {
-            var currentLetter = lttr.letterRender()
+            var currentLetter = lttr.letterDisplay()
             display += currentLetter
         })
         return display
